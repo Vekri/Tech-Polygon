@@ -1,0 +1,78 @@
+:root {
+  --bg-deep: #0b1118;
+  --bg-mid: #121c28;
+  --bg-lift: #1a2838;
+  --ink: #e8eef5;
+  --ink-muted: #8a9bb0;
+  --ink-dim: #5a6d82;
+  --edge: #2aebc8;
+  --edge-soft: rgba(42, 235, 200, 0.35);
+  --edge-dim: rgba(42, 235, 200, 0.12);
+  --accent: #3d9eff;
+  --accent-soft: rgba(61, 158, 255, 0.25);
+  --hull: rgba(61, 158, 255, 0.08);
+  --panel: rgba(14, 22, 32, 0.92);
+  --line: rgba(138, 155, 176, 0.18);
+  --font-display: "Syne", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --radius: 2px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+  color: var(--ink);
+  background: var(--bg-deep);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button,
+a {
+  font-family: inherit;
+}
+
+::selection {
+  background: rgba(42, 235, 200, 0.28);
+  color: var(--ink);
+}
+
+.atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 20%, rgba(61, 158, 255, 0.14), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(42, 235, 200, 0.08), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 15% 80%, rgba(61, 158, 255, 0.06), transparent 50%),
+    linear-gradient(165deg, var(--bg-deep) 0%, var(--bg-mid) 45%, #0e1620 100%);
+}
+
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(138, 155, 176, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 155, 176, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+}

@@ -1,0 +1,244 @@
+.constellation {
+  position: relative;
+  min-height: 120dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  padding-bottom: 2rem;
+}
+
+.constellation__atmosphere {
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.constellation__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+
+/* Cinematic left spine — matches hero */
+.constellation__spine {
+  flex: 0 0 clamp(4.25rem, 8vw, 6.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(42, 235, 200, 0.18);
+  background: linear-gradient(
+    180deg,
+    rgba(11, 17, 24, 0.35) 0%,
+    rgba(11, 17, 24, 0.55) 50%,
+    rgba(11, 17, 24, 0.35) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+.constellation__brand {
+  margin: 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 6vh, 4.6rem);
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: var(--ink);
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.constellation__brand .brand__tech {
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(232, 238, 245, 0.78);
+}
+
+.constellation__brand .brand__polygon {
+  font-size: 1.12em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--edge);
+  text-shadow: 0 0 28px rgba(42, 235, 200, 0.28);
+}
+
+.constellation__brand--on-image {
+  font-size: clamp(2rem, 5.2vh, 3.75rem);
+  color: rgba(232, 238, 245, 0.92);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+.constellation__brand--on-image .brand__tech {
+  color: rgba(232, 238, 245, 0.7);
+}
+
+.constellation__brand--on-image .brand__polygon {
+  color: var(--edge);
+  text-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.65),
+    0 0 24px rgba(42, 235, 200, 0.35);
+}
+
+.constellation__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  padding-left: clamp(0.85rem, 2vw, 1.35rem);
+}
+
+.constellation__header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 1rem;
+  max-width: 72rem;
+  text-align: left;
+}
+
+.constellation__title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 3.2vw, 2.15rem);
+  letter-spacing: -0.03em;
+  color: var(--edge);
+  max-width: 18ch;
+}
+
+.constellation__sub {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+  max-width: 36rem;
+}
+
+.constellation__count {
+  color: var(--edge);
+  font-weight: 500;
+}
+
+.constellation__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem 1.25rem;
+}
+
+.mesh-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mesh-controls button {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: rgba(18, 28, 40, 0.75);
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 2rem;
+  padding: 0.45rem 0.65rem;
+  cursor: pointer;
+}
+
+.mesh-controls button:hover {
+  border-color: var(--edge-soft);
+  color: var(--edge);
+}
+
+.mesh-controls__zoom {
+  margin-left: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--ink-dim);
+  min-width: 2.75rem;
+}
+
+.constellation__stage {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: min(92dvh, 1100px);
+  height: min(92dvh, 1100px);
+  border: 1px solid var(--line);
+  background: rgba(8, 12, 18, 0.45);
+  overflow: hidden;
+}
+
+/* Vertical title overlaid on the mesh image itself */
+.constellation__stage-spine {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: clamp(3.75rem, 6.5vw, 5.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(42, 235, 200, 0.16);
+  background: linear-gradient(
+    90deg,
+    rgba(11, 17, 24, 0.55) 0%,
+    rgba(11, 17, 24, 0.22) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.constellation__hint {
+  position: absolute;
+  z-index: 3;
+  left: clamp(4.1rem, 7vw, 6rem);
+  bottom: 0.75rem;
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  pointer-events: none;
+}
+
+.constellation__stage .mesh-canvas {
+  position: absolute;
+}
+
+@media (max-width: 720px) {
+  .constellation__spine {
+    flex-basis: 3.15rem;
+  }
+
+  .constellation__brand {
+    font-size: clamp(1.6rem, 5.5vh, 2.5rem);
+    letter-spacing: 0.08em;
+    gap: 0.45em;
+  }
+
+  .constellation__stage {
+    min-height: 85dvh;
+    height: 85dvh;
+  }
+
+  .constellation__stage-spine {
+    width: 3rem;
+  }
+
+  .constellation__brand--on-image {
+    font-size: clamp(1.5rem, 4.6vh, 2.25rem);
+  }
+
+  .constellation__hint {
+    display: none;
+  }
+}
