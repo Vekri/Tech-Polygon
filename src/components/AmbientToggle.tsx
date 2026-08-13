@@ -1,68 +1,74 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./AmbientToggle.css";
 
-const TRACK = "/galaxy-ambient.mp3";
+const TRACK = `${import.meta.env.BASE_URL}galaxy-ambient.mp3`;
 
-export function AmbientToggle() {
+type Props = {
+  /** Bumps when parent wants sound started from a user gesture */
+  playSignal?: number;
+};
+
+export function AmbientToggle({ playSignal = 0 }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [on, setOn] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const audio = new Audio(TRACK);
-    audio.loop = true;
-    audio.preload = "auto";
-    audio.volume = 0.55;
-    audioRef.current = audio;
-
-    return () => {
-      audio.pause();
-      audio.src = "";
-      audioRef.current = null;
-    };
-  }, []);
-
-  const toggle = async () => {
+  const play = useCallback(async () => {
     const audio = audioRef.current;
     if (!audio) return;
     setError(false);
-
     try {
-      if (!on) {
-        audio.currentTime = 0;
-        await audio.play();
-        setOn(true);
-        return;
-      }
-      audio.pause();
-      setOn(false);
+      audio.muted = false;
+      audio.volume = 0.85;
+      await audio.play();
+      setOn(true);
     } catch {
       setError(true);
       setOn(false);
     }
-  };
+  }, []);
+
+  const pause = useCallback(() => {
+    const audio = audioRef.current;
+    if (audio) audio.pause();
+    setOn(false);
+  }, []);
+
+  useEffect(() => {
+    if (playSignal > 0) void play();
+  }, [playSignal, play]);
 
   return (
-    <button
-      type="button"
-      className={`ambient-toggle${on ? " ambient-toggle--on" : ""}${error ? " ambient-toggle--error" : ""}`}
-      onClick={() => void toggle()}
-      aria-pressed={on}
-      aria-label={on ? "Mute galaxy ambient" : "Play galaxy ambient"}
-      title={
-        error
-          ? "Could not play audio — click again"
-          : on
-            ? "Mute ambient"
-            : "Play galaxy ambient"
-      }
-    >
-      <span className="ambient-toggle__icon" aria-hidden="true">
-        {on ? "♪" : "♫"}
-      </span>
-      <span className="ambient-toggle__label">
-        {error ? "Retry sound" : on ? "Sound on" : "Sound"}
-      </span>
-    </button>
+    <>
+      <audio
+        ref={audioRef}
+        src={TRACK}
+        loop
+        preload="auto"
+        playsInline
+      />
+      <button
+        type="button"
+        className={`ambient-toggle${on ? " ambient-toggle--on" : ""}${error ? " ambient-toggle--error" : ""}`}
+        onClick={() => {
+          if (on) pause();
+          else void play();
+        }}
+        aria-pressed={on}
+        aria-label={on ? "Stop galaxy sound" : "Play galaxy sound"}
+      >
+        <span className="ambient-toggle__icon" aria-hidden="true">
+          {on ? "♪" : "♫"}
+        </span>
+        <span className="ambient-toggle__label">
+          {error ? "Click to retry" : on ? "Sound on" : "Play sound"}
+        </span>
+      </button>
+      {error ? (
+        <p className="ambient-toggle__error" role="status">
+          Sound blocked — click Play sound again
+        </p>
+      ) : null}
+    </>
   );
 }
