@@ -11,22 +11,19 @@ export function Hero({ onEnter }: HeroProps) {
     <section className="hero" aria-label="Tech Polygon">
       <div className="atmosphere" aria-hidden="true" />
       <div className="hero__mesh" aria-hidden="true">
-        <MeshCanvas compact showLabels={false} showCategoryTitles scale={0.55} />
+        <MeshCanvas compact showLabels={false} showCategoryTitles scale={0.58} />
       </div>
       <div className="hero__veil" aria-hidden="true" />
 
-      <motion.aside
-        className="hero__spine"
-        aria-hidden="true"
-        initial={{ opacity: 0, x: -24 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+      <motion.p
+        className="hero__brand"
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       >
-        <p className="hero__brand">
-          <span className="brand__tech">Tech</span>
-          <span className="brand__polygon">Polygon</span>
-        </p>
-      </motion.aside>
+        <span className="brand__tech">Tech</span>
+        <span className="brand__polygon">Polygon</span>
+      </motion.p>
 
       <div className="hero__content">
         <motion.h1
@@ -35,7 +32,7 @@ export function Hero({ onEnter }: HeroProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
-          The IT world as one living mesh
+          Every technology. One polygon.
         </motion.h1>
         <motion.p
           className="hero__sub"
@@ -43,8 +40,8 @@ export function Hero({ onEnter }: HeroProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
         >
-          AI, agents, cloud, hardware, banking, health, energy, retail — one
-          living polygon mesh.
+          AI, agents, cloud, hardware, banking, health, energy, retail — mapped
+          as one connected mesh.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, x: -16 }}
@@ -59,9 +56,6 @@ export function Hero({ onEnter }: HeroProps) {
           </button>
         </motion.div>
       </div>
-
-      {/* Accessible brand for screen readers (visual brand is rotated spine) */}
-      <h2 className="hero__sr-only">Tech Polygon</h2>
     </section>
   );
 }

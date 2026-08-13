@@ -18,7 +18,7 @@ function App() {
         <span className="app__footer-sep" aria-hidden="true">
           ·
         </span>
-        <span>IT world as a living mesh</span>
+        <span>Every technology. One polygon.</span>
       </footer>
     </div>
   );
