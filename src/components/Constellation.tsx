@@ -74,9 +74,6 @@ export function Constellation() {
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="constellation__title">
-              Every technology. One polygon.
-            </h2>
             <p className="constellation__sub">
               Domain titles sit on the mesh — Banking, Healthcare, Energy,
               Retail, and every cluster.
@@ -142,6 +139,9 @@ export function Constellation() {
           <p className="constellation__brand">
             <span className="brand__tech">Tech</span>
             <span className="brand__polygon">Polygon</span>
+          </p>
+          <p className="constellation__line">
+            Every technology. One polygon.
           </p>
           <p className="constellation__hint">
             Scroll to zoom · Drag to pan · Click a node

@@ -25,15 +25,16 @@ export function Hero({ onEnter }: HeroProps) {
         <span className="brand__polygon">Polygon</span>
       </motion.p>
 
+      <motion.h1
+        className="hero__line"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+      >
+        Every technology. One polygon.
+      </motion.h1>
+
       <div className="hero__content">
-        <motion.h1
-          className="hero__line"
-          initial={{ opacity: 0, x: -28 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        >
-          Every technology. One polygon.
-        </motion.h1>
         <motion.p
           className="hero__sub"
           initial={{ opacity: 0, x: -20 }}
