@@ -8,7 +8,6 @@ import {
 } from "../data/techWorld";
 import {
   clusterCenter,
-  regularPolygon,
   toScreen,
   type LaidOutNode,
 } from "./layout";
@@ -122,38 +121,6 @@ export function drawMesh(
     state.filter !== null ||
     state.pricingFilter !== null ||
     state.matchIds !== null;
-
-  // One clear polygon frame (hexagon) — no per-cluster hull clutter
-  const frame = regularPolygon(6, state.compact ? 0.88 : 0.94, -Math.PI / 2);
-  ctx.beginPath();
-  frame.forEach((p, i) => {
-    const s = toScreen(p.x, p.y, w, h, drift, scale, zoom, panX, panY);
-    if (i === 0) ctx.moveTo(s.sx, s.sy);
-    else ctx.lineTo(s.sx, s.sy);
-  });
-  ctx.closePath();
-  ctx.fillStyle = "rgba(42, 235, 200, 0.03)";
-  ctx.fill();
-  ctx.strokeStyle = hexAlpha("#2aebc8", 0.55 + 0.15 * Math.sin(time * 0.0015));
-  ctx.lineWidth = state.compact ? 1.4 : 1.85;
-  ctx.setLineDash([]);
-  ctx.stroke();
-
-  // Inner accent rim
-  const inner = regularPolygon(6, state.compact ? 0.82 : 0.88, -Math.PI / 2);
-  ctx.beginPath();
-  inner.forEach((p, i) => {
-    const s = toScreen(p.x, p.y, w, h, drift, scale, zoom, panX, panY);
-    if (i === 0) ctx.moveTo(s.sx, s.sy);
-    else ctx.lineTo(s.sx, s.sy);
-  });
-  ctx.closePath();
-  ctx.strokeStyle = hexAlpha("#3d9eff", 0.22);
-  ctx.lineWidth = 1;
-  ctx.setLineDash([5, 10]);
-  ctx.lineDashOffset = -time * 0.025;
-  ctx.stroke();
-  ctx.setLineDash([]);
 
   for (const edge of graphEdges) {
     const a = screen.get(edge.from);
