@@ -135,7 +135,7 @@
   position: absolute;
   z-index: 4;
   left: clamp(0.85rem, 2vw, 1.25rem);
-  bottom: 2.35rem;
+  bottom: 0.85rem;
   margin: 0;
   font-family: var(--font-display);
   font-weight: 600;
@@ -143,7 +143,7 @@
   letter-spacing: 0.01em;
   line-height: 1.35;
   color: var(--edge);
-  max-width: 28ch;
+  max-width: min(28ch, calc(100% - 14rem));
   pointer-events: none;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
 }
@@ -151,13 +151,15 @@
 .constellation__hint {
   position: absolute;
   z-index: 3;
-  left: 1rem;
-  bottom: 0.75rem;
+  right: 1rem;
+  bottom: 0.85rem;
+  left: auto;
   margin: 0;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   color: var(--ink-dim);
   pointer-events: none;
+  text-align: right;
 }
 
 .constellation__stage .mesh-canvas {
@@ -177,8 +179,8 @@
 
   .constellation__line {
     left: 0.85rem;
-    bottom: 1rem;
-    max-width: 22ch;
+    bottom: 0.75rem;
+    max-width: calc(100% - 1.7rem);
   }
 
   .constellation__hint {

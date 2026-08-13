@@ -149,50 +149,6 @@ export function drawMesh(
     ctx.setLineDash([]);
   }
 
-  // Domain / vertical titles painted onto the mesh image
-  if (state.showCategoryTitles) {
-    for (const cat of categories) {
-      const catActive = state.filter === null || state.filter === cat.id;
-      if (state.filter && !catActive) continue;
-      const center = clusterCenter(laid, cat.id);
-      if (!center) continue;
-      const s = toScreen(
-        center.x,
-        center.y,
-        w,
-        h,
-        drift,
-        scale,
-        zoom,
-        panX,
-        panY,
-      );
-      const title = shortCategoryLabel(cat.label);
-      const fontPx = state.compact
-        ? 10
-        : Math.max(11, Math.min(15, 12 * zoom));
-      ctx.font = `700 ${fontPx}px "Syne", "DM Sans", sans-serif`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      const metrics = ctx.measureText(title);
-      const padX = 8;
-      const padY = 5;
-      const bw = metrics.width + padX * 2;
-      const bh = fontPx + padY * 2;
-      ctx.fillStyle = hexAlpha("#0b1118", catActive ? 0.72 : 0.35);
-      ctx.strokeStyle = hexAlpha(cat.color, catActive ? 0.55 : 0.2);
-      ctx.lineWidth = 1;
-      roundRect(ctx, s.sx - bw / 2, s.sy - bh / 2, bw, bh, 2);
-      ctx.fill();
-      ctx.stroke();
-      ctx.fillStyle = hexAlpha(
-        cat.color,
-        catActive ? 0.95 : 0.4,
-      );
-      ctx.fillText(title, s.sx, s.sy + 0.5);
-    }
-  }
-
   for (const edge of graphEdges) {
     const a = screen.get(edge.from);
     const b = screen.get(edge.to);
@@ -267,7 +223,7 @@ export function drawMesh(
         (state.compact && hash(n.id) % 6 === 0));
 
     if (showLabel) {
-      ctx.font = `${focused || searched ? 600 : 500} ${focused ? 13 : 11}px "DM Sans", sans-serif`;
+      ctx.font = `${focused || searched ? 600 : 500} ${focused ? 14 : 12}px "DM Sans", sans-serif`;
       ctx.fillStyle = hexAlpha(
         "#e8eef5",
         focused ? 0.95 : searched ? 0.9 : filtering ? 0.75 : 0.48,
@@ -275,6 +231,47 @@ export function drawMesh(
       ctx.textAlign = "center";
       ctx.textBaseline = "top";
       ctx.fillText(n.name, s.sx, s.sy + r + 5);
+    }
+  }
+
+  // Domain titles on top of nodes so names stay readable
+  if (state.showCategoryTitles) {
+    for (const cat of categories) {
+      const catActive = state.filter === null || state.filter === cat.id;
+      if (state.filter && !catActive) continue;
+      const center = clusterCenter(laid, cat.id);
+      if (!center) continue;
+      const s = toScreen(
+        center.x,
+        center.y,
+        w,
+        h,
+        drift,
+        scale,
+        zoom,
+        panX,
+        panY,
+      );
+      const title = shortCategoryLabel(cat.label);
+      const fontPx = state.compact
+        ? 14
+        : Math.max(16, Math.min(22, 17 * zoom));
+      ctx.font = `700 ${fontPx}px "Syne", "DM Sans", sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      const metrics = ctx.measureText(title);
+      const padX = 11;
+      const padY = 7;
+      const bw = metrics.width + padX * 2;
+      const bh = fontPx + padY * 2;
+      ctx.fillStyle = hexAlpha("#0b1118", catActive ? 0.82 : 0.4);
+      ctx.strokeStyle = hexAlpha(cat.color, catActive ? 0.7 : 0.25);
+      ctx.lineWidth = 1.25;
+      roundRect(ctx, s.sx - bw / 2, s.sy - bh / 2, bw, bh, 3);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = hexAlpha("#e8eef5", catActive ? 0.98 : 0.45);
+      ctx.fillText(title, s.sx, s.sy + 0.5);
     }
   }
 }

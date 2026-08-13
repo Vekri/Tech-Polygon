@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MeshCanvas } from "./MeshCanvas";
 import "./Hero.css";
@@ -7,11 +8,31 @@ interface HeroProps {
 }
 
 export function Hero({ onEnter }: HeroProps) {
+  const [panX, setPanX] = useState(0);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      // Push the polygon to the right so left copy stays clear
+      setPanX(Math.round(w * (w < 720 ? 0.12 : 0.22)));
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   return (
     <section className="hero" aria-label="Tech Polygon">
       <div className="atmosphere" aria-hidden="true" />
       <div className="hero__mesh" aria-hidden="true">
-        <MeshCanvas compact showLabels={false} showCategoryTitles scale={0.58} />
+        <MeshCanvas
+          compact
+          showLabels={false}
+          showCategoryTitles={false}
+          scale={0.56}
+          panX={panX}
+          panY={-24}
+        />
       </div>
       <div className="hero__veil" aria-hidden="true" />
 
@@ -25,21 +46,20 @@ export function Hero({ onEnter }: HeroProps) {
         <span className="brand__polygon">Polygon</span>
       </motion.p>
 
-      <motion.h1
-        className="hero__line"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      >
-        Every technology. One polygon.
-      </motion.h1>
-
       <div className="hero__content">
+        <motion.h1
+          className="hero__line"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Every technology. One polygon.
+        </motion.h1>
         <motion.p
           className="hero__sub"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.9, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
         >
           AI, agents, cloud, hardware, banking, health, energy, retail — mapped
           as one connected mesh.
@@ -47,7 +67,7 @@ export function Hero({ onEnter }: HeroProps) {
         <motion.div
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.85, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.85, delay: 0.36, ease: [0.22, 1, 0.36, 1] }}
         >
           <button type="button" className="hero__cta" onClick={onEnter}>
             Enter the mesh
