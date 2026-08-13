@@ -10,6 +10,7 @@ import { MeshCanvas } from "./MeshCanvas";
 import { CategoryFilter } from "./CategoryFilter";
 import { NodeDetail } from "./NodeDetail";
 import { TechSearch } from "./TechSearch";
+import { Starfield } from "./Starfield";
 import "./Constellation.css";
 
 export function Constellation() {
@@ -136,6 +137,9 @@ export function Constellation() {
         </div>
 
         <div className="constellation__stage">
+          <div className="constellation__cosmos" aria-hidden="true">
+            <Starfield />
+          </div>
           <p className="constellation__brand">
             <span className="brand__tech">Tech</span>
             <span className="brand__polygon">Polygon</span>

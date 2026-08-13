@@ -2,7 +2,7 @@
   position: fixed;
   z-index: 50;
   right: clamp(0.85rem, 2vw, 1.35rem);
-  bottom: clamp(0.85rem, 2vw, 1.35rem);
+  bottom: clamp(3.75rem, 7vh, 5.25rem);
   appearance: none;
   display: inline-flex;
   align-items: center;
@@ -55,7 +55,7 @@
   position: fixed;
   z-index: 50;
   right: clamp(0.85rem, 2vw, 1.35rem);
-  bottom: clamp(3.4rem, 8vw, 4rem);
+  bottom: clamp(6.4rem, 11vh, 8rem);
   margin: 0;
   max-width: 14rem;
   text-align: right;
@@ -66,6 +66,7 @@
 
 @media (max-width: 720px) {
   .ambient-toggle {
+    bottom: clamp(3.25rem, 8vh, 4.5rem);
     padding: 0.75rem 0.9rem;
   }
 }

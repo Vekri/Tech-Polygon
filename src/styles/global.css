@@ -59,20 +59,23 @@ a {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 55% at 50% 20%, rgba(61, 158, 255, 0.14), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(42, 235, 200, 0.08), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 15% 80%, rgba(61, 158, 255, 0.06), transparent 50%),
-    linear-gradient(165deg, var(--bg-deep) 0%, var(--bg-mid) 45%, #0e1620 100%);
+    radial-gradient(ellipse 90% 60% at 70% 35%, rgba(40, 70, 120, 0.22), transparent 62%),
+    radial-gradient(ellipse 70% 50% at 20% 75%, rgba(42, 235, 200, 0.07), transparent 58%),
+    radial-gradient(ellipse 55% 45% at 85% 80%, rgba(90, 60, 160, 0.1), transparent 55%),
+    linear-gradient(165deg, #070b12 0%, #0c1520 42%, #0a1018 100%);
 }
 
 .atmosphere::after {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.35;
+  opacity: 0.22;
   background-image:
-    linear-gradient(rgba(138, 155, 176, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(138, 155, 176, 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+    radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1px 1px at 30% 65%, rgba(200, 230, 255, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 70% 35%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 85% 75%, rgba(180, 220, 255, 0.45), transparent),
+    radial-gradient(1px 1px at 55% 15%, rgba(255, 255, 255, 0.35), transparent);
+  background-size: 100% 100%;
+  mask-image: radial-gradient(ellipse 80% 70% at 55% 45%, black, transparent);
 }

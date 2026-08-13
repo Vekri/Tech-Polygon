@@ -89,8 +89,15 @@
   min-height: min(92dvh, 1100px);
   height: min(92dvh, 1100px);
   border: 1px solid var(--line);
-  background: rgba(8, 12, 18, 0.45);
+  background: rgba(6, 10, 16, 0.75);
   overflow: hidden;
+}
+
+.constellation__cosmos {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* Brand title on top of the polygon map */
@@ -164,6 +171,7 @@
 
 .constellation__stage .mesh-canvas {
   position: absolute;
+  z-index: 1;
 }
 
 @media (max-width: 720px) {

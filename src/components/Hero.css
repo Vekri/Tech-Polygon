@@ -6,16 +6,23 @@
   overflow: hidden;
 }
 
-.hero__mesh {
+.hero__cosmos {
   position: absolute;
   inset: 0;
   z-index: 0;
+  pointer-events: none;
+}
+
+.hero__mesh {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .hero__veil {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   background:
     linear-gradient(
       to bottom,
@@ -43,7 +50,7 @@
 /* Brand sits on top of the polygon mesh */
 .hero__brand {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   top: clamp(1.25rem, 4vh, 2.5rem);
   left: clamp(1.1rem, 3vw, 2rem);
   transform: none;
@@ -80,7 +87,7 @@
 
 .hero__content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   padding: clamp(2rem, 5vw, 4rem);
   padding-bottom: clamp(3rem, 8vh, 5.5rem);
   max-width: min(32rem, 42vw);

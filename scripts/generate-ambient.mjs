@@ -1,46 +1,53 @@
 /**
- * Generate a soft galaxy ambient loop (PCM WAV) — original composition.
+ * Spaceflight ambient — rising pads, engine hum, star shimmer.
+ * Original composition for Tech Polygon.
  */
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 
 const SAMPLE_RATE = 44100;
-const DURATION = 36;
+const DURATION = 42;
 const N = SAMPLE_RATE * DURATION;
 
-const FREQ = {
-  C2: 65.41,
+const F = {
+  A1: 55,
   D2: 73.42,
+  E2: 82.41,
   F2: 87.31,
-  G2: 98.0,
-  A2: 110.0,
+  G2: 98,
+  A2: 110,
   Bb2: 116.54,
   C3: 130.81,
   D3: 146.83,
   E3: 164.81,
   F3: 174.61,
-  G3: 196.0,
-  A3: 220.0,
+  G3: 196,
+  A3: 220,
   Bb3: 233.08,
   C4: 261.63,
   D4: 293.66,
   E4: 329.63,
   F4: 349.23,
-  G4: 392.0,
-  A4: 440.0,
+  G4: 392,
+  A4: 440,
   C5: 523.25,
+  D5: 587.33,
   E5: 659.25,
   G5: 783.99,
+  A5: 880,
 };
 
+// Journey through space: dark launch → open void → bright coast → deep glide
 const chords = [
+  ["A1", "E2", "A2", "C3", "E3"],
   ["D2", "A2", "C3", "F3", "A3"],
-  ["Bb2", "F3", "A3", "D4", "F4"],
-  ["F2", "C3", "E3", "A3", "C4"],
-  ["C2", "G2", "C3", "E3", "G3"],
+  ["F2", "C3", "F3", "A3", "C4"],
+  ["G2", "D3", "G3", "Bb3", "D4"],
+  ["A1", "E2", "A2", "C3", "G3"],
+  ["Bb2", "F3", "Bb3", "D4", "F4"],
 ];
 
-const sparkles = ["A4", "C5", "E5", "G5", "E5", "C5", "A4", "G4"];
+const sparkles = ["E4", "A4", "C5", "E5", "A5", "G5", "E5", "C5", "A4", "G4"];
 const chordLen = DURATION / chords.length;
 
 function sine(freq, t, phase = 0) {
@@ -48,7 +55,7 @@ function sine(freq, t, phase = 0) {
 }
 
 function softClip(x) {
-  return Math.tanh(x * 1.2);
+  return Math.tanh(x * 1.25);
 }
 
 function toInt16(sample) {
@@ -61,45 +68,65 @@ const right = new Float64Array(N);
 
 for (let i = 0; i < N; i++) {
   const t = i / SAMPLE_RATE;
+  const journey = t / DURATION; // 0 → 1 through space
   const chordIndex = Math.min(chords.length - 1, Math.floor(t / chordLen));
   const localT = t - chordIndex * chordLen;
   const env =
-    Math.min(1, localT / 1.8) * Math.min(1, (chordLen - localT) / 2.2);
+    Math.min(1, localT / 2.2) * Math.min(1, (chordLen - localT) / 2.6);
+
+  // Slow pitch lift = sense of acceleration into space
+  const accel = 1 + journey * 0.045;
 
   let pad = 0;
   chords[chordIndex].forEach((name, idx) => {
-    const f = FREQ[name];
+    const f = F[name] * accel;
     const wobble =
-      1 + 0.0035 * Math.sin(2 * Math.PI * (0.05 + idx * 0.012) * t);
+      1 + 0.004 * Math.sin(2 * Math.PI * (0.04 + idx * 0.011) * t);
     pad +=
-      sine(f * wobble, t, idx) * (0.24 / (idx + 1)) +
-      sine(f * 2 * wobble, t, idx * 1.7) * (0.07 / (idx + 1));
+      sine(f * wobble, t, idx) * (0.26 / (idx + 1)) +
+      sine(f * 2.005 * wobble, t, idx * 1.4) * (0.08 / (idx + 1)) +
+      sine(f * 0.5, t, idx * 0.3) * (0.05 / (idx + 1));
   });
-  pad *= env * (0.72 + 0.28 * Math.sin(2 * Math.PI * 0.04 * t));
+  pad *= env * (0.7 + 0.3 * Math.sin(2 * Math.PI * 0.035 * t));
 
-  const sparkIdx = Math.floor(t * 1.15) % sparkles.length;
-  const sparkF = FREQ[sparkles[sparkIdx]];
-  const sparkPhase = t * 1.15 - Math.floor(t * 1.15);
-  const sparkEnv = Math.sin(Math.PI * Math.min(1, sparkPhase * 1.85)) ** 2;
-  const spark =
-    sine(sparkF, t) * 0.05 * sparkEnv +
-    sine(sparkF * 2.005, t) * 0.018 * sparkEnv;
-
-  let noise = Math.sin(i * 12.9898) * 43758.5453;
+  // Engine / thruster bed
+  let noise = Math.sin(i * 12.9898 + t * 7.1) * 43758.5453;
   noise = (noise - Math.floor(noise)) * 2 - 1;
-  const air = noise * 0.02 * (0.5 + 0.5 * Math.sin(2 * Math.PI * 0.07 * t));
+  const engine =
+    noise *
+    (0.03 + 0.04 * journey) *
+    (0.55 + 0.45 * Math.sin(2 * Math.PI * 0.2 * t));
+  const hum =
+    sine(F.A1 * accel, t) *
+    (0.1 + 0.06 * journey) *
+    (0.6 + 0.4 * Math.sin(2 * Math.PI * 0.08 * t));
 
-  const pulse =
-    sine(FREQ.D2, t) *
-    0.09 *
-    (0.55 + 0.45 * Math.sin(2 * Math.PI * 0.125 * t));
+  // Passing stars / signal pings
+  const sparkIdx = Math.floor(t * (1.35 + journey)) % sparkles.length;
+  const sparkF = F[sparkles[sparkIdx]] * accel;
+  const sparkPhase = (t * (1.35 + journey)) % 1;
+  const sparkEnv = Math.sin(Math.PI * Math.min(1, sparkPhase * 2.1)) ** 2;
+  const spark =
+    (sine(sparkF, t) * 0.055 + sine(sparkF * 2.01, t) * 0.02) *
+    sparkEnv *
+    (0.7 + journey * 0.5);
 
-  const sample = softClip(pad + spark + air + pulse) * 0.92;
-  left[i] = sample * (0.9 + 0.1 * Math.sin(2 * Math.PI * 0.03 * t));
-  right[i] = sample * (0.9 + 0.1 * Math.cos(2 * Math.PI * 0.033 * t));
+  // Occasional distant sweep
+  const sweepT = (t % 8.5) / 8.5;
+  const sweep =
+    sine(180 + sweepT * 520, t) *
+    0.025 *
+    Math.sin(Math.PI * sweepT) ** 2 *
+    (0.4 + journey);
+
+  const sample = softClip(pad + engine + hum + spark + sweep) * 0.9;
+  const width = 0.12 + journey * 0.08;
+  left[i] = sample * (1 - width * 0.5 + width * Math.sin(2 * Math.PI * 0.028 * t));
+  right[i] =
+    sample * (1 - width * 0.5 + width * Math.cos(2 * Math.PI * 0.031 * t));
 }
 
-const fade = Math.floor(SAMPLE_RATE * 2.5);
+const fade = Math.floor(SAMPLE_RATE * 2.8);
 for (let i = 0; i < fade; i++) {
   const a = i / fade;
   left[i] *= a;
@@ -131,4 +158,4 @@ header.writeUInt32LE(interleaved.length, 40);
 
 const outWav = path.resolve("public/galaxy-ambient.wav");
 writeFileSync(outWav, Buffer.concat([header, interleaved]));
-console.log(`Wrote ${outWav} (${(interleaved.length / 1024 / 1024).toFixed(2)} MB PCM)`);
+console.log(`Wrote ${outWav}`);

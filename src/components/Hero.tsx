@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MeshCanvas } from "./MeshCanvas";
+import { Starfield } from "./Starfield";
 import "./Hero.css";
 
 interface HeroProps {
@@ -24,6 +25,9 @@ export function Hero({ onEnter }: HeroProps) {
   return (
     <section className="hero" aria-label="Tech Polygon">
       <div className="atmosphere" aria-hidden="true" />
+      <div className="hero__cosmos" aria-hidden="true">
+        <Starfield />
+      </div>
       <div className="hero__mesh" aria-hidden="true">
         <MeshCanvas
           compact
