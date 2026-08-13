@@ -34,6 +34,11 @@
   background: rgba(14, 28, 34, 0.9);
 }
 
+.ambient-toggle--error {
+  border-color: rgba(255, 120, 120, 0.55);
+  color: #ffb4b4;
+}
+
 .ambient-toggle:focus-visible {
   outline: 2px solid var(--edge);
   outline-offset: 3px;
