@@ -108,8 +108,8 @@
   position: absolute;
   z-index: 4;
   top: clamp(0.85rem, 2vh, 1.35rem);
-  left: 50%;
-  transform: translateX(-50%);
+  left: clamp(0.85rem, 2vw, 1.25rem);
+  transform: none;
   margin: 0;
   display: inline-flex;
   align-items: baseline;
@@ -165,6 +165,7 @@
 
   .constellation__brand {
     font-size: clamp(1.05rem, 4.5vw, 1.35rem);
+    left: 0.85rem;
   }
 
   .constellation__hint {
