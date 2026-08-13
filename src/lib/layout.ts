@@ -98,7 +98,38 @@ export function hullForCategory(
   padding = 0.08,
 ): { x: number; y: number }[] {
   const pts = laid.filter((n) => n.category === category);
-  const points = pts.map((p) => ({ x: p.x, y: p.y }));
+  return convexHull(pts.map((p) => ({ x: p.x, y: p.y })), padding);
+}
+
+/** One outer hull around the full tech mesh */
+export function outerMeshHull(
+  laid: LaidOutNode[],
+  padding = 0.12,
+): { x: number; y: number }[] {
+  return convexHull(
+    laid.map((p) => ({ x: p.x, y: p.y })),
+    padding,
+  );
+}
+
+/** Crisp geometric polygon frame (normalized space, centered). */
+export function regularPolygon(
+  sides = 6,
+  radius = 0.92,
+  rotation = -Math.PI / 2,
+): { x: number; y: number }[] {
+  const pts: { x: number; y: number }[] = [];
+  for (let i = 0; i < sides; i++) {
+    const a = rotation + (i / sides) * Math.PI * 2;
+    pts.push({ x: Math.cos(a) * radius, y: Math.sin(a) * radius });
+  }
+  return pts;
+}
+
+function convexHull(
+  points: { x: number; y: number }[],
+  padding = 0.08,
+): { x: number; y: number }[] {
   if (points.length === 0) return [];
   if (points.length === 1) {
     const p = points[0];
@@ -159,8 +190,8 @@ export function hullForCategory(
   lower.pop();
   upper.pop();
   const hull = lower.concat(upper);
+  if (hull.length === 0) return [];
 
-  // Expand slightly from centroid
   const cx = hull.reduce((s, p) => s + p.x, 0) / hull.length;
   const cy = hull.reduce((s, p) => s + p.y, 0) / hull.length;
   return hull.map((p) => {
