@@ -158,15 +158,16 @@
 .constellation__hint {
   position: absolute;
   z-index: 3;
-  right: 1rem;
+  left: 1rem;
+  right: auto;
   bottom: 0.85rem;
-  left: auto;
   margin: 0;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   color: var(--ink-dim);
   pointer-events: none;
-  text-align: right;
+  text-align: left;
+  max-width: calc(100% - 8rem);
 }
 
 .constellation__stage .mesh-canvas {
