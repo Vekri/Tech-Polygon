@@ -116,7 +116,7 @@
   gap: 0.35em;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.85rem, 4vw, 3.1rem);
+  font-size: clamp(1.2rem, 2.4vw, 1.75rem);
   letter-spacing: 0.02em;
   line-height: 1;
   white-space: nowrap;
@@ -164,7 +164,7 @@
   }
 
   .constellation__brand {
-    font-size: clamp(1.45rem, 7vw, 2rem);
+    font-size: clamp(1.05rem, 4.5vw, 1.35rem);
   }
 
   .constellation__hint {
