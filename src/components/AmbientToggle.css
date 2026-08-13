@@ -1,0 +1,55 @@
+.ambient-toggle {
+  position: fixed;
+  z-index: 40;
+  right: clamp(0.85rem, 2vw, 1.35rem);
+  bottom: clamp(0.85rem, 2vw, 1.35rem);
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--line);
+  background: rgba(11, 17, 24, 0.82);
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    border-color 0.25s var(--ease),
+    color 0.25s var(--ease),
+    background 0.25s var(--ease);
+}
+
+.ambient-toggle:hover {
+  border-color: var(--edge-soft);
+  color: var(--ink);
+}
+
+.ambient-toggle--on {
+  border-color: var(--edge-soft);
+  color: var(--edge);
+  background: rgba(14, 28, 34, 0.9);
+}
+
+.ambient-toggle:focus-visible {
+  outline: 2px solid var(--edge);
+  outline-offset: 3px;
+}
+
+.ambient-toggle__icon {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+@media (max-width: 720px) {
+  .ambient-toggle__label {
+    display: none;
+  }
+
+  .ambient-toggle {
+    padding: 0.65rem 0.75rem;
+  }
+}

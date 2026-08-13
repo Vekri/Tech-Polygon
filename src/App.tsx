@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { Hero } from "./components/Hero";
 import { Constellation } from "./components/Constellation";
+import { AmbientToggle } from "./components/AmbientToggle";
 import "./styles/global.css";
 import "./App.css";
 
@@ -13,6 +14,7 @@ function App() {
     <div className="app">
       <Hero onEnter={enterMesh} />
       <Constellation />
+      <AmbientToggle />
       <footer className="app__footer">
         <span>Tech Polygon</span>
         <span className="app__footer-sep" aria-hidden="true">
