@@ -19,7 +19,7 @@ export function AmbientToggle({ playSignal = 0 }: Props) {
     setError(false);
     try {
       audio.muted = false;
-      audio.volume = 0.85;
+      audio.volume = 0.7;
       await audio.play();
       setOn(true);
     } catch {
