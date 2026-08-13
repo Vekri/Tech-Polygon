@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { MeshCanvas } from "./MeshCanvas";
 import { Starfield } from "./Starfield";
 import "./Hero.css";
 
@@ -9,34 +7,11 @@ interface HeroProps {
 }
 
 export function Hero({ onEnter }: HeroProps) {
-  const [panX, setPanX] = useState(0);
-
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      // Push the polygon to the right so left copy stays clear
-      setPanX(Math.round(w * (w < 720 ? 0.12 : 0.22)));
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
   return (
     <section className="hero" aria-label="Tech Polygon">
       <div className="atmosphere" aria-hidden="true" />
       <div className="hero__cosmos" aria-hidden="true">
         <Starfield />
-      </div>
-      <div className="hero__mesh" aria-hidden="true">
-        <MeshCanvas
-          compact
-          showLabels={false}
-          showCategoryTitles={false}
-          scale={0.56}
-          panX={panX}
-          panY={-24}
-        />
       </div>
       <div className="hero__veil" aria-hidden="true" />
 
